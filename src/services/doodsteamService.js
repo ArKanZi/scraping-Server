@@ -24,7 +24,6 @@ async function doodstreamScraper(url) {
   const newUrl = response.request.res.responseUrl;
   const quality = "Doodstream";
   const doodHost = new URL(newUrl).hostname;
-  console.log(doodHost);
   const content = response.data;
   if (!content.includes("'/pass_md5/")) return null;
 
@@ -40,7 +39,7 @@ async function doodstreamScraper(url) {
     }
   );
   const videoUrl = `${videoUrlStartResponse.data}${randomString}?token=${token}&expiry=${expiry}`;
-
+  console.log(md5, videoUrl);
   return {
     newUrl,
     quality,
