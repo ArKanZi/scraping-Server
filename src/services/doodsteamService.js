@@ -25,6 +25,7 @@ async function doodstreamScraper(url, userAgent) {
     params: {
       url: url,
       apikey: "03072aaae4d4d6caf850c1af16e8aa99ffb63cd5",
+      premium_proxy: "true",
     },
   });
 
