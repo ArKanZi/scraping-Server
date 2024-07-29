@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-async function doodstreamScraper(url, host) {
+async function doodstreamScraper(url, userAgent) {
   function getRandomString(length = 10) {
     const allowedChars =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -19,7 +19,9 @@ async function doodstreamScraper(url, host) {
       Referer: `https://${host}/`,
     };
   }
-  const response = await axios.get(url);
+  const response = await axios.get(url, {
+    headers: { "User-Agent": userAgent },
+  });
 
   const newUrl = response.request.res.responseUrl;
   const quality = "Doodstream";
