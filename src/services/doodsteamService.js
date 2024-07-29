@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-async function doodstreamScraper(url) {
+async function doodstreamScraper(url, host) {
   function getRandomString(length = 10) {
     const allowedChars =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -24,8 +24,8 @@ async function doodstreamScraper(url) {
   const newUrl = response.request.res.responseUrl;
   const quality = "Doodstream";
   const doodHost = new URL(newUrl).hostname;
-  console.log(response);
   const content = response.data;
+  console.log(content);
   if (!content.includes("'/pass_md5/")) return null;
 
   const md5 = content.split("'/pass_md5/")[1].split("',")[0];

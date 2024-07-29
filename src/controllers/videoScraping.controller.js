@@ -9,13 +9,13 @@ const doodstream = async (req, res) => {
   if (altDomain) {
     url = url.replace(filterDomain, altDomain);
   }
-
+  const host = req.body.host;
   if (!url) {
     return res.status(400).json({ message: "URL is required" });
   }
 
   try {
-    const data = await doodsteamService.doodstreamScraper(url);
+    const data = await doodsteamService.doodstreamScraper(url, host);
     res.json({ message: "Scraped data successfully", data });
   } catch (error) {
     res
