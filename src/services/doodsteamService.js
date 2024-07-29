@@ -19,8 +19,13 @@ async function doodstreamScraper(url, userAgent) {
       Referer: `https://${host}/`,
     };
   }
-  const response = await axios.get(url, {
-    headers: { "User-Agent": userAgent },
+  const response = await axios({
+    url: "https://api.zenrows.com/v1/",
+    method: "GET",
+    params: {
+      url: url,
+      apikey: "03072aaae4d4d6caf850c1af16e8aa99ffb63cd5",
+    },
   });
 
   const newUrl = response.request.res.responseUrl;
