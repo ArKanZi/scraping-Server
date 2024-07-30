@@ -3,7 +3,7 @@ const { chromium } = require("playwright");
 async function doodstreamScraper(url) {
   const quality = "Doodstream";
   const browser = await chromium.launch({
-    headless: false,
+    headless: true,
   });
   const context = await browser.newContext();
   const page = await context.newPage();
@@ -16,7 +16,7 @@ async function doodstreamScraper(url) {
   const videoUrl = await page
     .getByRole("link", { name: "Download file  􏃭" })
     .getAttribute("href");
-
+  await browser.close();
   function doodHeaders(host) {
     return {
       "User-Agent": "Aniyomi",
