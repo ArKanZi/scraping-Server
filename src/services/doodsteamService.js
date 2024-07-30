@@ -1,4 +1,7 @@
-const { chromium } = require("playwright");
+const { chromium } = require("playwright-extra");
+const pluginStealth = require("puppeteer-extra-plugin-stealth");
+
+chromium.use(pluginStealth);
 
 async function doodstreamScraper(url) {
   const quality = "Doodstream";
