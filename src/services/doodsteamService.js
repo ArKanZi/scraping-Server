@@ -3,7 +3,7 @@ const { chromium } = require("playwright");
 async function doodstreamScraper(url) {
   const quality = "Doodstream";
   const browser = await chromium.launch({
-    headless: false,
+    headless: true,
   });
   const context = await browser.newContext();
   const page = await context.newPage();
