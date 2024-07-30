@@ -1,17 +1,21 @@
-const axios = require("axios");
+const { chromium } = require("playwright");
 
-async function doodstreamScraper(url, userAgent) {
-  function getRandomString(length = 10) {
-    const allowedChars =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let result = "";
-    for (let i = 0; i < length; i++) {
-      result += allowedChars.charAt(
-        Math.floor(Math.random() * allowedChars.length)
-      );
-    }
-    return result;
-  }
+async function doodstreamScraper(url) {
+  const quality = "Doodstream";
+  const browser = await chromium.launch({
+    headless: false,
+  });
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  await page.goto(url);
+  await page.getByRole("link", { name: "Download Now  􏁡" }).click();
+  const newUrl = page.url();
+  const hostname = new URL(newUrl).hostname;
+  await page.waitForTimeout(5000);
+  await page.getByRole("link", { name: "High quality  􏃭" }).click();
+  const videoUrl = await page
+    .getByRole("link", { name: "Download file  􏃭" })
+    .getAttribute("href");
 
   function doodHeaders(host) {
     return {
@@ -19,34 +23,12 @@ async function doodstreamScraper(url, userAgent) {
       Referer: `https://${host}/`,
     };
   }
-  const response = await axios.get(url, {
-    headers: { "User-Agent": userAgent },
-  });
-
-  const newUrl = response.request.res.responseUrl;
-  const quality = "Doodstream";
-  const doodHost = new URL(newUrl).hostname;
-  const content = response.data;
-  console.log(content);
-  if (!content.includes("'/pass_md5/")) return null;
-
-  const md5 = content.split("'/pass_md5/")[1].split("',")[0];
-  const token = md5.split("/").pop();
-  const randomString = getRandomString();
-  const expiry = Date.now();
-
-  const videoUrlStartResponse = await axios.get(
-    `https://${doodHost}/pass_md5/${md5}`,
-    {
-      headers: { Referer: newUrl },
-    }
-  );
-  const videoUrl = `${videoUrlStartResponse.data}${randomString}?token=${token}&expiry=${expiry}`;
   return {
     newUrl,
     quality,
     videoUrl,
-    headers: doodHeaders(doodHost),
+    headers: doodHeaders(hostname),
   };
 }
+
 module.exports = { doodstreamScraper };
