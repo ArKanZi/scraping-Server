@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/main.js",
     "dev": "nodemon ./src/main.js",
-    "update-system": "sudo apt-get update && sudo apt-get install -y libicu66 libevent-2.1-7 libjpeg8 libenchant-2-2 libsecret-1-0 libffi7 libgles2-mesa",
+    "update-system": "apt-get update && apt-get install -y libicu66 libevent-2.1-7 libjpeg8 libenchant-2-2 libsecret-1-0 libffi7 libgles2-mesa",
     "postinstall": "npx playwright install"
   },
   "author": "",
