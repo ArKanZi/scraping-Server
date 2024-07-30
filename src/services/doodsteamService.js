@@ -8,6 +8,11 @@ async function doodstreamScraper(url) {
   const context = await browser.newContext();
   const page = await context.newPage();
   await page.goto(url);
+  const timestamp = Date.now();
+  await page.screenshot({
+    path: `./src/images/screeenshot-${timestamp}.png`,
+    fullPage: true,
+  });
   await page.getByRole("link", { name: "Download Now  􏁡" }).click();
   const newUrl = page.url();
   const hostname = new URL(newUrl).hostname;
