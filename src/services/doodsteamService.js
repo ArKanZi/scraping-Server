@@ -9,15 +9,15 @@ async function doodstreamScraper(url) {
   const page = await context.newPage();
   await page.goto(url);
   const timestamp = Date.now();
-  await page.screenshot({
-    path: `./src/images/screeenshot-${timestamp}.png`,
-    fullPage: true,
-  });
   await page.getByRole("link", { name: "Download Now" }).click();
   const newUrl = page.url();
   const hostname = new URL(newUrl).hostname;
   await page.waitForTimeout(5000);
   await page.getByRole("link", { name: "High quality" }).click();
+  await page.screenshot({
+    path: `./src/images/screeenshot-${timestamp}.png`,
+    fullPage: true,
+  });
   const videoUrl = await page
     .getByRole("link", { name: "Download file" })
     .getAttribute("href");
